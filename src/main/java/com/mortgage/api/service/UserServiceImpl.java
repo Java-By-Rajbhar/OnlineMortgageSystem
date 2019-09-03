@@ -37,6 +37,10 @@ public class UserServiceImpl implements UserService {
 	LoginRepository loginRepository;
 	@Autowired
 	UserUtility userUtility;
+	@Autowired
+	MailService mailService;
+	@Autowired
+	SmsService smsService;
 
 	/**
 	 * This method is use to add mortgage user
@@ -88,6 +92,9 @@ public class UserServiceImpl implements UserService {
 				// save user data
 				user.setUserId(userId_g);
 				userRepository.save(user);
+				smsService.sms("Login for INGMortgage\n UserId :" +userId_g+"\n Password :"+password_g);
+				mailService.sendEmail(user.getEmailId(), userId_g, password_g);
+				
 				// get account object
 				Account mortAccount = accountRepository.findByAccountTypeAndUserId("Mortgage", userId_g);
 				Account transAccount = accountRepository.findByAccountTypeAndUserId("Transaction", userId_g);
