@@ -23,7 +23,7 @@ import com.mortgage.api.repository.UserRepository;
 @Service
 public class SchedulerServiceImpl implements SchedulerService {
 
-	private final static Logger LOGGER = LoggerFactory.getLogger(SchedulerServiceImpl.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(SchedulerServiceImpl.class);
 	
 	@Autowired
 	private AccountRepository accountRepository;
@@ -45,7 +45,7 @@ public class SchedulerServiceImpl implements SchedulerService {
 		List<String> userIds = userRepository.getDistinctUserId();
 		userIds.stream().forEach(userId -> {
 			
-			LOGGER.info("SchedulerServiceImpl :: runTask - userId : "+userId);
+			LOGGER.info("SchedulerServiceImpl :: runTask - userId : ");
 			
 			Account mortgageAccount = accountRepository.findByAccountTypeAndUserId("Mortgage", userId);
 			Account transactionAccount = accountRepository.findByAccountTypeAndUserId("Transaction", userId);

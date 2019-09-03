@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.mortgage.api.dto.AccountSummaryResponseDto;
 import com.mortgage.api.dto.TransactionSummaryDto;
 import com.mortgage.api.service.AccountService;
-import com.mortgage.api.service.AccountServiceImpl;
 
 /**
  * 

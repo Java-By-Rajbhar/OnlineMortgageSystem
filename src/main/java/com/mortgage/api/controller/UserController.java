@@ -29,7 +29,7 @@ public class UserController {
 	{
 		UserResponseDto response = userService.addMortgageDetail(userRequestDto);
 		
-		return new ResponseEntity<UserResponseDto>(response, HttpStatus.CREATED);
+		return new ResponseEntity<>(response, HttpStatus.CREATED);
 		
 	}
 
