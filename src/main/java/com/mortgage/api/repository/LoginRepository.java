@@ -13,5 +13,7 @@ import com.mortgage.api.entity.Login;
 public interface LoginRepository extends JpaRepository<Login, Integer> {
 
 	Login findByUserIdAndPassword(String userId, String decodedPassword);
+	
+	Login findByUserId(String userId);
 
 }

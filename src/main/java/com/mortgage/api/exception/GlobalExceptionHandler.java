@@ -20,5 +20,17 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		ResponseError error = new ResponseError(ex.getMessage(), HttpStatus.NOT_FOUND.value());
 		return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
 	}
+	
+	@ExceptionHandler(AgeNotValidException.class)
+	public ResponseEntity<ResponseError> ageNotValidExceptionHandler(AgeNotValidException ex) {
+		ResponseError error = new ResponseError(ex.getMessage(), HttpStatus.NOT_FOUND.value());
+		return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+	}
+	
+	@ExceptionHandler(UserIdAlreadyExitsException.class)
+	public ResponseEntity<ResponseError> userIdAlreadyExitsExceptionHandler(UserIdAlreadyExitsException ex) {
+		ResponseError error = new ResponseError(ex.getMessage(), HttpStatus.NOT_FOUND.value());
+		return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+	}
 
 }
