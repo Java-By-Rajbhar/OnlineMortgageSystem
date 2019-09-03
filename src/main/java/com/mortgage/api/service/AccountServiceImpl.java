@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 import com.mortgage.api.dto.AccountSummaryResponseDto;
 import com.mortgage.api.dto.TransactionSummaryDto;
 import com.mortgage.api.entity.Account;
+import com.mortgage.api.entity.TransactionSummary;
 import com.mortgage.api.entity.User;
 import com.mortgage.api.repository.AccountRepository;
-import com.mortgage.api.repository.TransactionSummary;
 import com.mortgage.api.repository.TransactionSummaryRepository;
 import com.mortgage.api.repository.UserRepository;
 

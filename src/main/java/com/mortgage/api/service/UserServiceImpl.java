@@ -67,7 +67,7 @@ public class UserServiceImpl implements UserService {
 			//save login data
 			loginRepository.save(login);
 			//set account data for mortgage
-			account.setAccountNo("M10101");
+			account.setAccountNo(userUtility.generateAccountNumber("Mortgage"));
 			account.setAccountType("Mortgage");
 			account.setAmount(userRequestDto.getPropertyValue());
 			account.setUserId(userId_g);
@@ -75,7 +75,7 @@ public class UserServiceImpl implements UserService {
 			accountRepository.save(account);
 			//set account data for transaction
 			Account account1 = new Account();
-			account1.setAccountNo("T10101");
+			account1.setAccountNo(userUtility.generateAccountNumber("Transaction"));
 			account1.setAccountType("Transaction");
 			account1.setAmount(userRequestDto.getDepositAmount());
 			account1.setUserId(userId_g);
