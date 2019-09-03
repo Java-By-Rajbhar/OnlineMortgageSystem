@@ -12,4 +12,6 @@ import com.mortgage.api.entity.Account;
 public interface AccountRepository extends JpaRepository<Account, Integer> {
 	
 	public List<Account> findByUserId(String userId);
+	
+	public Account findByAccountTypeAndUserId(String accountType,String userId);
 }
