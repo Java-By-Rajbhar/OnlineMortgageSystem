@@ -5,7 +5,12 @@ import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.Base64;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.mortgage.api.repository.AccountRepository;
+
+import io.swagger.annotations.Authorization;
 
 /**
  * 
@@ -14,6 +19,9 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class UserUtility {
+	
+	@Autowired
+	AccountRepository accountRepository;
 	
 	public String generateUserId(String firstName)
 	{
@@ -44,6 +52,26 @@ public class UserUtility {
 		  LocalDate now = LocalDate.now(); //gets localDate
 		  Period diff = Period.between(l, now); 
 		  return diff.getYears();
+	}
+	
+	public String generateAccountNumber(String accountType) {
+		String mortgageAccountNum = null;
+		String accNum = accountRepository.getMaxAccountNumber(accountType);
+		if(accountType.equalsIgnoreCase("Mortgage") && accNum!=null) {
+			int account = Integer.parseInt(accNum.substring(4));
+	         mortgageAccountNum = "MING"+String.valueOf(account+1);
+		} else if(accountType.equalsIgnoreCase("Transaction")  && accNum!=null) {
+			int account = Integer.parseInt(accNum.substring(4));
+	         mortgageAccountNum = "TING"+String.valueOf(account+1);
+		} else if(accNum==null && accountType.equalsIgnoreCase("Mortgage")) {
+			String padedNum = String.format("%06d", 1);
+            mortgageAccountNum = "MING1"+padedNum;
+		} else if(accNum==null && accountType.equalsIgnoreCase("Transaction")) {
+			String padedNum = String.format("%06d", 1);
+            mortgageAccountNum = "TING2"+padedNum;
+		}
+		 
+		return mortgageAccountNum;
 	}
 	
 	private UserUtility() {}
