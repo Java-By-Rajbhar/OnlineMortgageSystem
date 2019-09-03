@@ -20,6 +20,8 @@ public class UserUtility {
 
 	private static final String MORTGAGE = "Mortgage";
 	private static final String TRANSACTION = "Transaction";
+	private static final String MING ="MING";
+	private static final String TING ="TING";
 	@Autowired
 	AccountRepository accountRepository;
 
@@ -58,10 +60,10 @@ public class UserUtility {
 		String accNum = accountRepository.getMaxAccountNumber(accountType);
 		if (accountType.equalsIgnoreCase(MORTGAGE) && accNum != null) {
 			int account = Integer.parseInt(accNum.substring(4));
-			mortgageAccountNum = "MING" + String.valueOf(account + 1);
+			mortgageAccountNum = MING + String.valueOf(account + 1);
 		} else if (accountType.equalsIgnoreCase(TRANSACTION) && accNum != null) {
 			int account = Integer.parseInt(accNum.substring(4));
-			mortgageAccountNum = "TING" + String.valueOf(account + 1);
+			mortgageAccountNum = TING + String.valueOf(account + 1);
 		} else if (accNum == null && accountType.equalsIgnoreCase(MORTGAGE)) {
 			String padedNum = String.format("%06d", 1);
 			mortgageAccountNum = "MING1" + padedNum;
