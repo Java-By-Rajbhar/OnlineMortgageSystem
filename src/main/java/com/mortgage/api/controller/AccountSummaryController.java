@@ -38,7 +38,7 @@ public class AccountSummaryController {
 	public ResponseEntity<List<TransactionSummaryDto>> transactionSummary(@PathVariable String accountNum)
 	{
 		
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>(accountService.transactionList(accountNum),HttpStatus.OK);
 	}
 
 }
