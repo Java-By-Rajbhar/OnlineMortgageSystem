@@ -14,6 +14,8 @@ import com.mortgage.api.entity.User;
  */
 @Repository
 public interface UserRepository extends JpaRepository<User, String> {
+	
+	public User findByUserId(String userId);
 
 	@Query("SELECT DISTINCT userId FROM User")
 	public List<String> getDistinctUserId();

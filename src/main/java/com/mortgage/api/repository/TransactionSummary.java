@@ -1,4 +1,7 @@
-package com.mortgage.api.entity;
+package com.mortgage.api.repository;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,20 +18,19 @@ import lombok.Setter;
 @Setter
 @Getter
 @NoArgsConstructor
-public class Account {
-
+public class TransactionSummary {
+	
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int id;
-	private String userId;
-	private String accountNo;
-	private double amount;
-	private String accountType;
+	private int transactionId ;
+	private String accountNo; 
+	private String transactionType; 
+	private LocalDateTime transactionDateTime; 
+	private double amount; 
+	private String description; 
 
-	
 }
-
 
 
 

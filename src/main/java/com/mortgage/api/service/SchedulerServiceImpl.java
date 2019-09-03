@@ -47,8 +47,8 @@ public class SchedulerServiceImpl implements SchedulerService {
 			
 			LOGGER.info("SchedulerServiceImpl :: runTask - userId : "+userId);
 			
-			Account mortgageAccount = accountRepository.findByUserIdAndAccountType(userId, "Mortgage");
-			Account transactionAccount = accountRepository.findByUserIdAndAccountType(userId, "Transaction");
+			Account mortgageAccount = accountRepository.findByAccountTypeAndUserId("Mortgage", userId);
+			Account transactionAccount = accountRepository.findByAccountTypeAndUserId("Transaction", userId);
 			mortgageAccount.setAmount(mortgageAccount.getAmount() + 200);
 			transactionAccount.setAmount(transactionAccount.getAmount() - 200);
 

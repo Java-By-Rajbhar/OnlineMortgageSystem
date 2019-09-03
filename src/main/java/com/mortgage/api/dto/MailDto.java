@@ -4,16 +4,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-/**
- * 
- * @author Sushil
- *
- */
 @Setter
 @Getter
 @NoArgsConstructor
-public class LoginRequestDto {
+public class MailDto {
 
-	private String userId;
-	private String password;
+	private String emailId;
+	private String emailSubject;
+	private String text;
 }

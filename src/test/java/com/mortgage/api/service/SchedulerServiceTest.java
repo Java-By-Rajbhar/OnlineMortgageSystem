@@ -44,9 +44,9 @@ public class SchedulerServiceTest {
 	public void testRunTask() {
 
 		Mockito.when(userRepository.getDistinctUserId()).thenReturn(userIds);
-		Mockito.when(accountRepository.findByUserIdAndAccountType(Mockito.anyString(), "Mortgage"))
+		Mockito.when(accountRepository.findByAccountTypeAndUserId("Mortgage", Mockito.anyString() ))
 				.thenReturn(mortgageAccount);
-		Mockito.when(accountRepository.findByUserIdAndAccountType(Mockito.anyString(), "Transaction"))
+		Mockito.when(accountRepository.findByAccountTypeAndUserId("Transaction", Mockito.anyString()))
 				.thenReturn(transactionAccount);
 		Mockito.when(accountRepository.save(Mockito.anyObject()));
 		Mockito.when(accountRepository.save(Mockito.anyObject()));
