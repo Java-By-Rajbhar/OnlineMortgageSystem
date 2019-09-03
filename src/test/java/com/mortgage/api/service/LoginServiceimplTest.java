@@ -1,5 +1,11 @@
 package com.mortgage.api.service;
 
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -67,4 +73,5 @@ public class LoginServiceimplTest {
 		Assert.assertEquals(loginResponseDto.getUserId(), login.getUserId());
 
 	}
+
 }

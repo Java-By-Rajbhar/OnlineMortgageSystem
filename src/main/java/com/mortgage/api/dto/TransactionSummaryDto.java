@@ -15,5 +15,6 @@ public class TransactionSummaryDto {
 	private String transactionType;
 	private LocalDateTime transactionDateTime;
 	private double amount;
+	private String desc;
 	
 }

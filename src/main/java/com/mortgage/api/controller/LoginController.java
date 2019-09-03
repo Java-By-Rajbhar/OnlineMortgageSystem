@@ -32,7 +32,7 @@ public class LoginController {
 	public ResponseEntity<LoginResponseDto> login(@RequestBody LoginRequestDto loginRequestDto) {
 		LOGGER.info("inside MORTGAGE LOGIN");
 		LoginResponseDto loginResponseDto = loginService.login(loginRequestDto);
-		return new ResponseEntity<>(loginResponseDto, HttpStatus.OK);
+		return new ResponseEntity<>(loginResponseDto, HttpStatus.CREATED);
 	}
 
 }
