@@ -3,15 +3,17 @@ package com.mortgage.api.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mortgage.api.dto.AccountSummaryResponseDto;
 import com.mortgage.api.dto.TransactionSummaryDto;
 import com.mortgage.api.entity.Account;
+import com.mortgage.api.entity.TransactionSummary;
 import com.mortgage.api.entity.User;
 import com.mortgage.api.repository.AccountRepository;
-import com.mortgage.api.repository.TransactionSummary;
 import com.mortgage.api.repository.TransactionSummaryRepository;
 import com.mortgage.api.repository.UserRepository;
 
@@ -19,7 +21,7 @@ import com.mortgage.api.repository.UserRepository;
 @Service
 public class AccountServiceImpl implements AccountService {
 
-	
+	private static final Logger LOGGER = LoggerFactory.getLogger(AccountServiceImpl.class);
 	
 	@Autowired
 	private AccountRepository accountRespository;
@@ -33,6 +35,8 @@ public class AccountServiceImpl implements AccountService {
 	
 	@Override
 	public AccountSummaryResponseDto accountSummary(String userId) {
+		
+		LOGGER.info("accountSummary-->>>");
 		
 		AccountSummaryResponseDto accountSummaryResponseDto=new AccountSummaryResponseDto();
 
@@ -65,6 +69,8 @@ public class AccountServiceImpl implements AccountService {
 
 	@Override
 	public List<TransactionSummaryDto> transactionList(String accountNumber) {
+		
+		LOGGER.info("transactionList-->>>");
 
 		List<TransactionSummaryDto> listTransactionSummary=new ArrayList<>();
 		List<TransactionSummary> listTransaction=transactionSummaryRepository.findByAccountNo(accountNumber);
@@ -74,6 +80,7 @@ public class AccountServiceImpl implements AccountService {
 			transactionSummaryDto.setAmount(transactionSummary.getAmount());
 			transactionSummaryDto.setTransactionDateTime(transactionSummary.getTransactionDateTime());
 			transactionSummaryDto.setTransactionType(transactionSummary.getTransactionType());
+			transactionSummaryDto.setTransactionId(transactionSummary.getTransactionId());
 			listTransactionSummary.add(transactionSummaryDto);
 		}
 		
