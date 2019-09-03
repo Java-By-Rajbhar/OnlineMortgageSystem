@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 
 import com.mortgage.api.entity.Account;
 
-
 @Repository
 public interface AccountRepository extends JpaRepository<Account, Integer> {
 	
