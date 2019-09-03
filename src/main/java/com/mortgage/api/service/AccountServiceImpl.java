@@ -81,6 +81,7 @@ public class AccountServiceImpl implements AccountService {
 			transactionSummaryDto.setTransactionDateTime(transactionSummary.getTransactionDateTime());
 			transactionSummaryDto.setTransactionType(transactionSummary.getTransactionType());
 			transactionSummaryDto.setTransactionId(transactionSummary.getTransactionId());
+			transactionSummaryDto.setDesc(transactionSummary.getDescription());
 			listTransactionSummary.add(transactionSummaryDto);
 		}
 		
