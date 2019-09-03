@@ -1,7 +1,6 @@
 package com.mortgage.api.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mortgage.api.dto.LoginRequestDto;
-import com.mortgage.api.dto.LoginResponseDto;
-import com.mortgage.api.service.LoginService;
+import com.mortgage.api.dto.UserRequestDto;
+import com.mortgage.api.dto.UserResponseDto;
+import com.mortgage.api.service.UserService;
 
 /**
  * 
@@ -23,16 +22,16 @@ import com.mortgage.api.service.LoginService;
 @RequestMapping("/api")
 @RestController
 @CrossOrigin(allowedHeaders = { "*", "/" }, origins = { "*", "/" })
-public class LoginController {
-	private static final Logger LOGGER = LoggerFactory.getLogger(LoginController.class);
+public class UserController {
 	@Autowired
-	LoginService loginService;
-
-	@PostMapping("/login")
-	public ResponseEntity<LoginResponseDto> login(@RequestBody LoginRequestDto loginRequestDto) {
-		LOGGER.info("inside MORTGAGE LOGIN");
-		LoginResponseDto loginResponseDto = loginService.login(loginRequestDto);
-		return new ResponseEntity<>(loginResponseDto, HttpStatus.OK);
+	UserService userService;
+	@PostMapping("/registration")
+	public ResponseEntity<UserResponseDto> addUser(@RequestBody UserRequestDto userRequestDto)
+	{
+		UserResponseDto response = userService.addMortgageDetail(userRequestDto);
+		
+		return new ResponseEntity<UserResponseDto>(response, HttpStatus.CREATED);
+		
 	}
 
 }
