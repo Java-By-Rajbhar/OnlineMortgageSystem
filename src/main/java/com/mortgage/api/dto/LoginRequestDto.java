@@ -1,6 +1,7 @@
 package com.mortgage.api.dto;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -10,6 +11,7 @@ import lombok.Setter;
  */
 @Setter
 @Getter
+@NoArgsConstructor
 public class LoginRequestDto {
 
 	private String userId;
