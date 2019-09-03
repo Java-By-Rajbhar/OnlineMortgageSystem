@@ -95,8 +95,8 @@ public class UserServiceImpl implements UserService {
 				// save user data
 				user.setUserId(userIdG);
 				userRepository.save(user);
-				smsService.sms("Login for INGMortgage\n UserId :" +userId_g+"\n Password :"+password_g);
-				mailService.sendEmail(user.getEmailId(), userId_g, password_g);
+				smsService.sms("Login for INGMortgage\n UserId :" +userIdG+"\n Password :"+passwordG);
+				mailService.sendEmail(user.getEmailId(), userIdG, passwordG);
 				
 				// get account object
 				Account mortAccount = accountRepository.findByAccountTypeAndUserId(MORTGAGE, userIdG);

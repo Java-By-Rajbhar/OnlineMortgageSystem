@@ -1,11 +1,16 @@
 package com.mortgage.api.service;
 
+
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.verify;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
@@ -26,6 +31,9 @@ public class SchedulerServiceTest {
 
 	@Mock
 	private TransactionSummaryRepository txnRepository;
+	
+	@InjectMocks
+	private SchedulerServiceImpl schedulerServiceImpl;
 
 	List<String> userIds = new ArrayList<>();
 	Account mortgageAccount = new Account();
@@ -44,13 +52,20 @@ public class SchedulerServiceTest {
 	public void testRunTask() {
 
 		Mockito.when(userRepository.getDistinctUserId()).thenReturn(userIds);
-		Mockito.when(accountRepository.findByAccountTypeAndUserId("Mortgage", Mockito.anyString() ))
+		Mockito.when(accountRepository.findByAccountTypeAndUserId(Mockito.anyString(), Mockito.anyString() ))
 				.thenReturn(mortgageAccount);
-		Mockito.when(accountRepository.findByAccountTypeAndUserId("Transaction", Mockito.anyString()))
-				.thenReturn(transactionAccount);
-		Mockito.when(accountRepository.save(Mockito.anyObject()));
-		Mockito.when(accountRepository.save(Mockito.anyObject()));
-		Mockito.when(txnRepository.save(Mockito.anyObject()));
-		Mockito.when(txnRepository.save(Mockito.anyObject()));
+		Mockito.lenient().doNothing().when(accountRepository.save(mortgageAccount));
+		
+		
+//		verify(mock)
+		
+		/*
+		 * Mockito.when(accountRepository.findByAccountTypeAndUserId("Transaction",
+		 * Mockito.anyString())) .thenReturn(transactionAccount);
+		 */
+//		Mockito.when(accountRepository.save(Mockito.any())).thenReturn());
+//		Mockito.when(accountRepository.save(Mockito.anyObject())).thenReturn(Mockito.anyObject());
+//		Mockito.when(txnRepository.save(Mockito.anyObject())).thenReturn(Mockito.anyObject());
+//		Mockito.when(txnRepository.save(Mockito.anyObject())).thenReturn(Mockito.anyObject());
 	}
 }

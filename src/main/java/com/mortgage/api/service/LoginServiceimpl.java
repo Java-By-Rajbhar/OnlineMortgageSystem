@@ -49,7 +49,7 @@ public class LoginServiceimpl implements LoginService {
 		String decodedPassword = new String(decodedString);
 		LOGGER.info("decodedPassword ={}", decodedPassword);
 
-		Login login = loginRepository.findByUserIdAndPassword(loginRequestDto.getUserId(), decodedPassword);
+		Login login = loginRepository.findByUserIdAndPassword(loginRequestDto.getUserId(), encodedPassword);
 
 		if (login != null) {
 			
