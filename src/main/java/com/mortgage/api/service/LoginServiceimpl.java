@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.mortgage.api.dto.LoginRequestDto;
 import com.mortgage.api.dto.LoginResponseDto;
+import com.mortgage.api.dto.MailDto;
 import com.mortgage.api.entity.Login;
 import com.mortgage.api.exception.InvalidCredentialsException;
 import com.mortgage.api.repository.LoginRepository;
@@ -29,6 +30,9 @@ public class LoginServiceimpl implements LoginService {
 	@Autowired
 	SmsService smsService;
 
+	@Autowired
+	MailService mailService;
+
 	@Override
 	public LoginResponseDto login(LoginRequestDto loginRequestDto) {
 		LOGGER.info("inside Login");
@@ -46,6 +50,8 @@ public class LoginServiceimpl implements LoginService {
 			loginResponseDto.setStatus("Success");
 			loginResponseDto.setStatusCode(HttpStatus.CREATED.value());
 			smsService.sms(loginResponseDto.getMessage());
+			mailService.sendEmail("ayyanarajith7@gmail.com", "Logged in Successfully");
+
 			return loginResponseDto;
 		} else {
 
