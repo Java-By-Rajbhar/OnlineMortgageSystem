@@ -28,6 +28,9 @@ import com.mortgage.api.utility.UserUtility;
 public class UserServiceImpl implements UserService {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
+	
+	private static final String MORTGAGE = "Mortgage";
+	private static final String TRANSACTION = "Transaction";
 
 	@Autowired
 	AccountRepository accountRepository;
@@ -56,48 +59,48 @@ public class UserServiceImpl implements UserService {
 		User user = new User();
 		// get generated userId ,password and age calculation
 
-		String userId_g = userUtility.generateUserId(userRequestDto.getFirstName());
-		LOGGER.info("generated userId ={}", userId_g);
-		Login login1 = loginRepository.findByUserId(userId_g);
+		String userIdG = userUtility.generateUserId(userRequestDto.getFirstName());
+		LOGGER.info("generated userId ={}", userIdG);
+		Login login1 = loginRepository.findByUserId(userIdG);
 		if (login1 == null) {
-			login.setUserId(userId_g);
-			String password_g = userUtility.generatePassword(userRequestDto.getFirstName());
-			LOGGER.info("generated password ={}", password_g);
-			login.setPassword(password_g);
+			login.setUserId(userIdG);
+			String passwordG = userUtility.generatePassword(userRequestDto.getFirstName());
+			LOGGER.info("generated password ={}", passwordG);
+			login.setPassword(passwordG);
 			// save login data
 			loginRepository.save(login);
 			int age = userUtility.calculateAge(userRequestDto.getDateOfBirth());
 			if (age >= 18) {
 
 				// set account data for mortgage
-				account.setAccountNo(userUtility.generateAccountNumber("Mortgage"));
-				account.setAccountType("Mortgage");
+				account.setAccountNo(userUtility.generateAccountNumber(MORTGAGE));
+				account.setAccountType(MORTGAGE);
 				account.setAmount(userRequestDto.getPropertyValue());
-				account.setUserId(userId_g);
+				account.setUserId(userIdG);
 				// save account data
 				accountRepository.save(account);
 				// set account data for transaction
 				Account account1 = new Account();
-				account1.setAccountNo(userUtility.generateAccountNumber("Transaction"));
-				account1.setAccountType("Transaction");
+				account1.setAccountNo(userUtility.generateAccountNumber(TRANSACTION));
+				account1.setAccountType(TRANSACTION);
 				account1.setAmount(userRequestDto.getDepositAmount());
-				account1.setUserId(userId_g);
+				account1.setUserId(userIdG);
 				// save account data for transaction
 				accountRepository.save(account1);
 				BeanUtils.copyProperties(userRequestDto, user);
 				// save user data
-				user.setUserId(userId_g);
+				user.setUserId(userIdG);
 				userRepository.save(user);
 				// get account object
-				Account mortAccount = accountRepository.findByAccountTypeAndUserId("Mortgage", userId_g);
-				Account transAccount = accountRepository.findByAccountTypeAndUserId("Transaction", userId_g);
+				Account mortAccount = accountRepository.findByAccountTypeAndUserId(MORTGAGE, userIdG);
+				Account transAccount = accountRepository.findByAccountTypeAndUserId(TRANSACTION, userIdG);
 				// generate response
 				UserResponseDto responseDto = new UserResponseDto();
 				responseDto.setMessage("user has added successfully");
 				responseDto.setStatusCode(HttpStatus.CREATED.value());
 				responseDto.setMortgageAccount(mortAccount.getAccountNo());
 				responseDto.setTransactionAccount(transAccount.getAccountNo());
-				responseDto.setUserId(userId_g);
+				responseDto.setUserId(userIdG);
 
 				return responseDto;
 			} else {

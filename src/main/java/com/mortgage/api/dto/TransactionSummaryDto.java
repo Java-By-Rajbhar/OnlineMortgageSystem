@@ -10,10 +10,10 @@ import lombok.Setter;
 @Getter
 public class TransactionSummaryDto {
 
-	private int TransactionId;
+	private int transactionId;
 	private String accountNo;
-	private String TransactionType;
-	private LocalDateTime TransactionDateTime;
+	private String transactionType;
+	private LocalDateTime transactionDateTime;
 	private double amount;
 	
 }
