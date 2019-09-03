@@ -86,6 +86,7 @@ public class UserServiceImpl implements UserService {
 				accountRepository.save(account1);
 				BeanUtils.copyProperties(userRequestDto, user);
 				// save user data
+				user.setUserId(userId_g);
 				userRepository.save(user);
 				// get account object
 				Account mortAccount = accountRepository.findByAccountTypeAndUserId("Mortgage", userId_g);
