@@ -27,7 +27,10 @@ import com.mortgage.api.utility.UserUtility;
 public class UserServiceImpl implements UserService {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
-
+	@Autowired
+	SmsService smsService;
+	@Autowired
+	MailService mailService;
 	@Autowired
 	AccountRepository accountRepository;
 	@Autowired
@@ -47,58 +50,59 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserResponseDto addMortgageDetail(UserRequestDto userRequestDto) {
 		LOGGER.info("Inside addMortgageDetail of UserServiceImpl class");
-		//login object
+		// login object
 		Login login = new Login();
-		//Account object
+		// Account object
 		Account account = new Account();
-		//User Object
+		// User Object
 		User user = new User();
-		//get generated userId ,password and age calculation
-		
-		String userId_g= userUtility.generateUserId(userRequestDto.getFirstName());
-		LOGGER.info("generated userId ={}",userId_g);
+		// get generated userId ,password and age calculation
+
+		String userId_g = userUtility.generateUserId(userRequestDto.getFirstName());
+		LOGGER.info("generated userId ={}", userId_g);
 		login.setUserId(userId_g);
-		String password_g=userUtility.generatePassword(userRequestDto.getFirstName());
-		LOGGER.info("generated password ={}",password_g);
+		String password_g = userUtility.generatePassword(userRequestDto.getFirstName());
+		LOGGER.info("generated password ={}", password_g);
 		login.setPassword(password_g);
-		int age  = userUtility.calculateAge(userRequestDto.getDateOfBirth());
-		if(age>=18)
-		{
-			//save login data
+		int age = userUtility.calculateAge(userRequestDto.getDateOfBirth());
+		if (age >= 18) {
+			// save login data
 			loginRepository.save(login);
-			//set account data for mortgage
+			// set account data for mortgage
 			account.setAccountNo("M10101");
 			account.setAccountType("Mortgage");
 			account.setAmount(userRequestDto.getPropertyValue());
 			account.setUserId(userId_g);
-			//save account data
+			// save account data
 			accountRepository.save(account);
-			//set account data for transaction
+			// set account data for transaction
 			Account account1 = new Account();
 			account1.setAccountNo("T10101");
 			account1.setAccountType("Transaction");
 			account1.setAmount(userRequestDto.getDepositAmount());
 			account1.setUserId(userId_g);
-			//save account data for transaction
+			// save account data for transaction
 			accountRepository.save(account1);
 			BeanUtils.copyProperties(userRequestDto, user);
-			//save user data
+			// save user data
 			userRepository.save(user);
-			//get account object
-			Account mortAccount  = accountRepository.findByAccountTypeAndUserId("Mortgage",userId_g);
-			Account transAccount  = accountRepository.findByAccountTypeAndUserId("Transaction",userId_g);
-			//generate response
+			String message = "Login Credentials For INGMortgage \n UserId is:" + userId_g + "\n password : "
+					+ password_g;
+			smsService.sms(message);
+			mailService.sendEmail(user.getEmailId(), userId_g,password_g);
+			// get account object
+			Account mortAccount = accountRepository.findByAccountTypeAndUserId("Mortgage", userId_g);
+			Account transAccount = accountRepository.findByAccountTypeAndUserId("Transaction", userId_g);
+			// generate response
 			UserResponseDto responseDto = new UserResponseDto();
 			responseDto.setMessage("user has added successfully");
 			responseDto.setStatusCode(HttpStatus.CREATED.value());
 			responseDto.setMortgageAccount(mortAccount.getAccountNo());
 			responseDto.setTransactionAccount(transAccount.getAccountNo());
 			responseDto.setUserId(userId_g);
-			
+
 			return responseDto;
-		}
-		else
-		{
+		} else {
 			throw new AgeNotValidException("You are under age");
 		}
 

@@ -5,8 +5,6 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
 
-import com.mortgage.api.dto.MailDto;
-
 @Component
 public class MailService {
 
@@ -17,18 +15,13 @@ public class MailService {
 		this.javaMailSender = javaMailSender;
 	}
 
-	public void sendEmail(String emailId, String otp) {
+	public void sendEmail(String emailId, String userId, String password) {
 		SimpleMailMessage mail = new SimpleMailMessage();
 		mail.setTo(emailId);
-		mail.setSubject("INGTMRW Model Bank");
+		mail.setSubject("IngMortgage");
 
-		mail.setText("The OTP for Making Transfer" + " " + otp);
+		mail.setText("Login Credentials \n " + "UserId : " + userId + "\n Password :" + password);
 		javaMailSender.send(mail);
-	}
-
-	public void sendEmail(MailDto mailDto) {
-	
-		
 	}
 
 }

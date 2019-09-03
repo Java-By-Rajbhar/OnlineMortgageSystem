@@ -10,9 +10,10 @@ import org.springframework.stereotype.Service;
 
 import com.mortgage.api.dto.LoginRequestDto;
 import com.mortgage.api.dto.LoginResponseDto;
-import com.mortgage.api.dto.MailDto;
+import com.mortgage.api.entity.Account;
 import com.mortgage.api.entity.Login;
 import com.mortgage.api.exception.InvalidCredentialsException;
+import com.mortgage.api.repository.AccountRepository;
 import com.mortgage.api.repository.LoginRepository;
 
 /**
@@ -27,6 +28,10 @@ public class LoginServiceimpl implements LoginService {
 
 	@Autowired
 	LoginRepository loginRepository;
+
+	@Autowired
+	AccountRepository accountRepository;
+
 	@Autowired
 	SmsService smsService;
 
@@ -45,12 +50,25 @@ public class LoginServiceimpl implements LoginService {
 		LOGGER.info("decodedPassword ={}", decodedPassword);
 
 		Login login = loginRepository.findByUserIdAndPassword(loginRequestDto.getUserId(), decodedPassword);
+
 		if (login != null) {
+			
+
+			loginResponseDto.setUserId(login.getUserId());
+
+			String transaction = "Transaction";
+			String mortgage = "Mortgage";
+
+			Account transactionAccount = accountRepository.findByUserIdAndAccountType(login.getUserId(), transaction);
+			Account mortgageAccount = accountRepository.findByUserIdAndAccountType(login.getUserId(), mortgage);
+
+			loginResponseDto.setTransactionAccountNo(transactionAccount.getAccountNo());
+			loginResponseDto.setMortgageAccountNo(mortgageAccount.getAccountNo());
 			loginResponseDto.setMessage("Logged in Successfully");
 			loginResponseDto.setStatus("Success");
 			loginResponseDto.setStatusCode(HttpStatus.CREATED.value());
+			
 			smsService.sms(loginResponseDto.getMessage());
-			mailService.sendEmail("ayyanarajith7@gmail.com", "Logged in Successfully");
 
 			return loginResponseDto;
 		} else {
